@@ -37,6 +37,10 @@ This guide summarizes how to explore, modify, and validate the WhatsApp HTTP API
 - **Utilities**: RxJS streams (`SwitchObservable`, `DefaultMap`) drive webhook
   event fan-out. Prefer existing helpers in `src/utils` and `src/core/utils`
   before adding bespoke logic.
+- **OS** - the project works on any OS inside the Docker container; the base
+  image is defined in `Dockerfile`.
+- **CPU** - the image must run on both `x86_64` (including pre-v2 CPUs without
+  SSE4.2) and `aarch64`.
 
 ## Repository Landmarks
 
