@@ -325,6 +325,8 @@ waha.new.version.available: |-
 
   👉 Mira qué hay de nuevo en el [**🆕 Registro de Cambios**]({{{changelogUrl}}})
 
+  _Para desactivar estas notificaciones, envía_ `queue stop check.version`
+
 waha.core.version.used: |-
   ❤️ **¡Apoya a WAHA!**
 

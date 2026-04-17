@@ -714,6 +714,8 @@ waha.new.version.available: |-
 
   👉 Scopri le novità nel [**🆕 Changelog**]({{{changelogUrl}}})
 
+  _Per disattivare queste notifiche, invia_ `queue stop check.version`
+
 waha.core.version.used: |-
   ❤️ **Supporta WAHA!**
 

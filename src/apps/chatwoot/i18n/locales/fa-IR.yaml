@@ -325,6 +325,8 @@ waha.new.version.available: |-
 
   👉 موارد جدید را در [**🆕 تغییرات**]({{{changelogUrl}}}) مشاهده کنید
 
+  _برای غیرفعال کردن این اعلان‌ها، ارسال کنید_ `queue stop check.version`
+
 waha.core.version.used: |-
   ❤️ **از WAHA پشتیبانی کنید!**
 

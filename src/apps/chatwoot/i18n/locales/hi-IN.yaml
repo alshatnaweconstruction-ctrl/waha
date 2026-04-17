@@ -325,6 +325,8 @@ waha.new.version.available: |-
 
   👉 [**🆕 चेंजलॉग**]({{{changelogUrl}}}) में क्या नया है देखें
 
+  _इन सूचनाओं को अक्षम करने के लिए, भेजें_ `queue stop check.version`
+
 waha.core.version.used: |-
   ❤️ **WAHA का समर्थन करें!**
 

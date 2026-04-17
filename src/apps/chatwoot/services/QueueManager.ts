@@ -1,6 +1,7 @@
 import { QueueName } from '../consumers/QueueName';
 import { QueueRegistry } from '@waha/apps/chatwoot/services/QueueRegistry';
 import { Injectable } from '@nestjs/common';
+import { QueueNameRepr } from '@waha/apps/app_sdk/JobUtils';
 
 const Managable = true;
 const Locked = false;
@@ -76,8 +77,19 @@ export class QueueManager {
       case undefined:
         return queues;
 
-      default:
+      default: {
+        const matches = queues.filter((q) => q.split(' | ')[1] === shortcut);
+        if (matches.length === 1) {
+          return [matches[0]];
+        }
+        if (matches.length > 1) {
+          const names = matches.map(QueueNameRepr).join(', ');
+          throw new Error(
+            `Ambiguous queue name "${shortcut}", matches: ${names}`,
+          );
+        }
         return [shortcut as QueueName];
+      }
     }
   }
 
