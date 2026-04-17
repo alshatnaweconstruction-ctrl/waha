@@ -18,7 +18,8 @@ export class QueueManager {
   constructor(private readonly registry: QueueRegistry) {
     this.queues = {
       [QueueName.SCHEDULED_MESSAGE_CLEANUP]: Locked,
-      [QueueName.SCHEDULED_CHECK_VERSION]: Locked,
+      [QueueName.SCHEDULED_CHECK_VERSION]: Managable,
+      [QueueName.SCHEDULED_CHECK_TIER]: Locked,
       [QueueName.TASK_CONTACTS_PULL]: Locked,
       [QueueName.TASK_MESSAGES_PULL]: Locked,
       [QueueName.WAHA_SESSION_STATUS]: Locked,
