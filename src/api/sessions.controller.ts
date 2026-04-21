@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Inject,
-  NotFoundException,
   Param,
   Post,
   Put,
@@ -27,17 +25,11 @@ import {
 } from '@waha/nestjs/params/SessionApiParam';
 import { WAHAValidationPipe } from '@waha/nestjs/pipes/WAHAValidationPipe';
 import {
-  AppsService,
-  IAppsService,
-} from '@waha/apps/app_sdk/services/IAppsService';
-import {
   SessionLogoutDeprecatedRequest,
   SessionStartDeprecatedRequest,
   SessionStopDeprecatedRequest,
 } from '@waha/structures/sessions.deprecated.dto';
-import { generatePrefixedId } from '@waha/utils/ids';
 
-import { SessionManager } from '../core/abc/manager.abc';
 import { WhatsappSession } from '../core/abc/session.abc';
 import {
   ListSessionsQuery,
@@ -55,39 +47,29 @@ import { CheckPolicies } from '../core/auth/policies.decorator';
 import { PoliciesGuard } from '../core/auth/policies.guard';
 import { CanSession, FromBody, FromParam } from '../core/auth/policies';
 import { Action } from '@waha/core/auth/casl.types';
+import { SessionService } from '@waha/core/services/SessionService';
 
 @ApiSecurity('api_key')
 @Controller('api/sessions')
 @ApiTags('🖥️ Sessions')
 @UseGuards(PoliciesGuard)
 class SessionsController {
-  constructor(
-    private manager: SessionManager,
-    @Inject(AppsService) private appsService: IAppsService,
-  ) {}
-
-  private withLock(name: string, fn: () => any) {
-    return this.manager.withLock(name, fn);
-  }
+  constructor(private readonly sessionService: SessionService) {}
 
   @Get('/')
-  @ApiOperation({
-    summary: 'List all sessions',
-  })
+  @ApiOperation({ summary: 'List all sessions' })
   @CheckPolicies(CanSession(Action.List))
   @ApiOAuth2(['read:items'])
   async list(
     @Query(new WAHAValidationPipe()) query: ListSessionsQuery,
     @Req() req,
   ): Promise<SessionInfo[]> {
-    let sessions = await this.manager.getSessions(query.all);
+    let sessions = await this.sessionService.getSessions(query.all);
     if (!req.user?.isAdmin) {
       sessions = FilterSessions(req.ability, Action.Read, sessions);
     }
     if (query.expand?.includes(SessionExpand.apps)) {
-      for (const session of sessions) {
-        session.apps = await this.appsService.list(this.manager, session.name);
-      }
+      await this.sessionService.expandSessionApps(sessions);
     }
     return sessions;
   }
@@ -101,12 +83,9 @@ class SessionsController {
     @Param('session') name: string,
     @Query() query: SessionInfoQuery,
   ): Promise<SessionInfo> {
-    const session = await this.manager.getSessionInfo(name);
-    if (session === null) {
-      throw new NotFoundException('Session not found');
-    }
+    const session = await this.sessionService.getSession(name);
     if (query.expand?.includes(SessionExpand.apps)) {
-      session.apps = await this.appsService.list(this.manager, name);
+      await this.sessionService.expandSessionApps([session]);
     }
     return session;
   }
@@ -116,7 +95,7 @@ class SessionsController {
   @ApiOperation({ summary: 'Get information about the authenticated account' })
   @CheckPolicies(CanSession(Action.Use, FromParam('session')))
   getMe(@SessionParam session: WhatsappSession): MeInfo | null {
-    return session.getSessionMeInfo();
+    return this.sessionService.getSessionMe(session);
   }
 
   @Post('')
@@ -129,39 +108,11 @@ class SessionsController {
   @CheckPolicies(CanSession(Action.Create))
   @UsePipes(new WAHAValidationPipe())
   async create(@Body() request: SessionCreateRequest): Promise<SessionDTO> {
-    const name = request.name || generatePrefixedId('session');
-    await this.withLock(name, async () => {
-      if (await this.manager.exists(name)) {
-        const msg = `Session '${name}' already exists. Use PUT to update it.`;
-        throw new UnprocessableEntityException(msg);
-      }
-      const config = request.config;
-      const start = request.start || false;
-      await this.manager.upsert(name, config);
-      if (request.apps) {
-        await this.appsService.syncSessionApps(
-          this.manager,
-          name,
-          request.apps,
-        );
-      }
-      if (start) {
-        await this.manager.assign(name);
-        await this.manager.start(name);
-      }
-    });
-    const session = await this.manager.getSessionInfo(name);
-    if (request.apps) {
-      session.apps = await this.appsService.list(this.manager, name);
-    }
-    return session;
+    return this.sessionService.createSession(request);
   }
 
   @Put(':session')
-  @ApiOperation({
-    summary: 'Update a session',
-    description: '',
-  })
+  @ApiOperation({ summary: 'Update a session' })
   @SessionApiParam
   @ApiBody({ type: SessionUpdateRequest, examples: SessionExamples })
   @CheckPolicies(CanSession(Action.Use, FromParam('session')))
@@ -170,30 +121,7 @@ class SessionsController {
     @Param('session') name: string,
     @Body() request: SessionUpdateRequest,
   ): Promise<SessionDTO> {
-    await this.withLock(name, async () => {
-      if (!(await this.manager.exists(name))) {
-        throw new NotFoundException('Session not found');
-      }
-      const config = request.config;
-      const isRunning = this.manager.isRunning(name);
-      await this.manager.stop(name, true);
-      await this.manager.upsert(name, config);
-      if (request.apps) {
-        await this.appsService.syncSessionApps(
-          this.manager,
-          name,
-          request.apps,
-        );
-      }
-      if (isRunning) {
-        await this.manager.start(name);
-      }
-    });
-    const session = await this.manager.getSessionInfo(name);
-    if (request.apps) {
-      session.apps = await this.appsService.list(this.manager, name);
-    }
-    return session;
+    return this.sessionService.updateSession(name, request);
   }
 
   @Delete(':session')
@@ -206,13 +134,7 @@ class SessionsController {
   @CheckPolicies(CanSession(Action.Delete, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async delete(@Param('session') name: string): Promise<void> {
-    await this.withLock(name, async () => {
-      await this.manager.unassign(name);
-      await this.manager.unpair(name);
-      await this.manager.stop(name, true);
-      await this.manager.logout(name);
-      await this.manager.delete(name);
-    });
+    return this.sessionService.deleteSession(name);
   }
 
   @Post(':session/start')
@@ -225,15 +147,7 @@ class SessionsController {
   @CheckPolicies(CanSession(Action.Use, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async start(@Param('session') name: string): Promise<SessionDTO> {
-    await this.withLock(name, async () => {
-      const exists = await this.manager.exists(name);
-      if (!exists) {
-        throw new NotFoundException('Session not found');
-      }
-      await this.manager.assign(name);
-      await this.manager.start(name);
-    });
-    return await this.manager.getSessionInfo(name);
+    return this.sessionService.startSession(name);
   }
 
   @Post(':session/stop')
@@ -245,11 +159,7 @@ class SessionsController {
   @CheckPolicies(CanSession(Action.Use, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async stop(@Param('session') name: string): Promise<SessionDTO> {
-    await this.withLock(name, async () => {
-      await this.manager.unassign(name);
-      await this.manager.stop(name, false);
-    });
-    return await this.manager.getSessionInfo(name);
+    return this.sessionService.stopSession(name);
   }
 
   @Post(':session/logout')
@@ -261,20 +171,7 @@ class SessionsController {
   @CheckPolicies(CanSession(Action.Use, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async logout(@Param('session') name: string): Promise<SessionDTO> {
-    await this.withLock(name, async () => {
-      const exists = await this.manager.exists(name);
-      if (!exists) {
-        throw new NotFoundException('Session not found');
-      }
-      const isRunning = this.manager.isRunning(name);
-      await this.manager.unpair(name);
-      await this.manager.stop(name, true);
-      await this.manager.logout(name);
-      if (isRunning) {
-        await this.manager.start(name);
-      }
-    });
-    return await this.manager.getSessionInfo(name);
+    return this.sessionService.logoutSession(name);
   }
 
   @Post(':session/restart')
@@ -286,8 +183,7 @@ class SessionsController {
   @CheckPolicies(CanSession(Action.Use, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async restart(@Param('session') name: string): Promise<SessionDTO> {
-    await this.manager.restart(name);
-    return await this.manager.getSessionInfo(name);
+    return this.sessionService.restartSession(name);
   }
 
   @Post('/start/')
@@ -301,21 +197,18 @@ class SessionsController {
   async DEPRACATED_start(
     @Body() request: SessionStartDeprecatedRequest,
   ): Promise<SessionDTO> {
-    const name = request.name;
     if (!request.name) {
       throw new UnprocessableEntityException('Session name is required');
     }
-    if (this.manager.isRunning(name)) {
-      const msg = `Session '${name}' is already started.`;
-      throw new UnprocessableEntityException(msg);
+    if (this.sessionService.isSessionRunning(request.name)) {
+      throw new UnprocessableEntityException(
+        `Session '${request.name}' is already started.`,
+      );
     }
-
-    return await this.withLock(name, async () => {
-      const config = request.config;
-      await this.manager.upsert(name, config);
-      await this.manager.assign(name);
-      return await this.manager.start(name);
-    });
+    return this.sessionService.upsertAndStartSession(
+      request.name,
+      request.config,
+    );
   }
 
   @Post('/stop/')
@@ -331,23 +224,11 @@ class SessionsController {
     if (!request.name) {
       throw new UnprocessableEntityException('Session name is required');
     }
-    const name = request.name;
     if (request.logout) {
-      // Old API did remove the session complete
-      await this.withLock(name, async () => {
-        await this.manager.unassign(name);
-        await this.manager.unpair(name);
-        await this.manager.stop(name, true);
-        await this.manager.logout(name);
-        await this.manager.delete(name);
-      });
+      await this.sessionService.deleteSession(request.name);
     } else {
-      await this.withLock(name, async () => {
-        await this.manager.unassign(name);
-        await this.manager.stop(name, false);
-      });
+      await this.sessionService.stopSession(request.name);
     }
-    return;
   }
 
   @Post('/logout/')
@@ -363,15 +244,7 @@ class SessionsController {
     if (!request.name) {
       throw new UnprocessableEntityException('Session name is required');
     }
-    const name = request.name;
-    await this.withLock(name, async () => {
-      await this.manager.unassign(name);
-      await this.manager.unpair(name);
-      await this.manager.stop(name, true);
-      await this.manager.logout(name);
-      await this.manager.delete(name);
-    });
-    return;
+    await this.sessionService.deleteSession(request.name);
   }
 }
 

@@ -69,6 +69,7 @@ import { SessionManagerCore } from './manager.core';
 import { CaslAbilityFactory } from '@waha/core/auth/casl.ability';
 import { PoliciesGuard } from '@waha/core/auth/policies.guard';
 import { ApiKeyService } from '@waha/core/auth/ApiKeyService';
+import { SessionService } from '@waha/core/services/SessionService';
 
 export const IMPORTS_CORE = [
   ...AppsModuleExports.imports,
@@ -188,6 +189,7 @@ export const PROVIDERS_BASE: Provider[] = [
   ApiKeyService,
   CaslAbilityFactory,
   PoliciesGuard,
+  SessionService,
   {
     provide: IApiKeyAuth,
     useFactory: ApiKeyAuthFactory,
