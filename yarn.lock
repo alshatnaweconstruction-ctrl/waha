@@ -4391,15 +4391,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wppconnect-team/wppconnect@npm:^1.41.1":
-  version: 1.41.1
-  resolution: "@wppconnect-team/wppconnect@npm:1.41.1"
+"@wppconnect-team/wppconnect@npm:^1.41.3":
+  version: 1.41.3
+  resolution: "@wppconnect-team/wppconnect@npm:1.41.3"
   dependencies:
     "@img/sharp-win32-x64": "npm:^0.34.5"
-    "@wppconnect/wa-js": "npm:^3.23.2"
-    "@wppconnect/wa-version": "npm:^1.5.3379"
+    "@wppconnect/wa-js": "npm:^3.23.4"
+    "@wppconnect/wa-version": "npm:^1.5.3731"
     atob: "npm:^2.1.2"
-    axios: "npm:^1.13.5"
+    axios: "npm:^1.15.0"
     boxen: "npm:^5.1.2"
     catch-exit: "npm:^2.0.0"
     chalk: "npm:~4.1.2"
@@ -4420,7 +4420,7 @@ __metadata:
     qrcode-terminal: "npm:^0.12.0"
     reflect-metadata: "npm:^0.2.1"
     rimraf: "npm:^3.0.2"
-    sanitize-filename: "npm:^1.6.3"
+    sanitize-filename: "npm:^1.6.4"
     sharp: "npm:0.34.5"
     tmp: "npm:^0.2.5"
     tree-kill: "npm:^1.2.2"
@@ -4431,31 +4431,24 @@ __metadata:
       optional: true
     fsevents:
       optional: true
-  checksum: 10/b3eaadb669819bc5b380f5b18365c4b4e72569062790764b6d9b1b063351cd4b1b1e904a76f1e3f1b7a3b51e81aa5bbda116870086023c6c4360b64de560bcb3
+  checksum: 10/81267937a2ba04ead83444799b80c57dafd4aa5c3255bbd71843071c3b1549b8e2d3879b2be1d1d1e52037c32a8825f18a82cf9cc6f73c57904f5f1d24ef591a
   languageName: node
   linkType: hard
 
-"@wppconnect/wa-js@npm:^3.23.2":
-  version: 3.23.2
-  resolution: "@wppconnect/wa-js@npm:3.23.2"
-  checksum: 10/68ec7e73d3c0dc078956890941988645cc585dda6f63426f27fbd01e0c0e47f56f3bffa61469a486c9e93f9cff9ae56ab8ec5915a9a7c51fa6327c026885784a
+"@wppconnect/wa-js@npm:^3.23.4":
+  version: 3.23.4
+  resolution: "@wppconnect/wa-js@npm:3.23.4"
+  checksum: 10/f9e54d956ac8688ff19a25759c5171bed8cdb482ba92d480308ee3a3a3666bee82c72e6fae388f0567324a3acaded735834cd0e172daa88dcc7a4ab66552f931
   languageName: node
   linkType: hard
 
-"@wppconnect/wa-js@npm:^3.23.3":
-  version: 3.23.3
-  resolution: "@wppconnect/wa-js@npm:3.23.3"
-  checksum: 10/8b4407f3f90f781f63800b1023943ff1978ced614c4f9b7075e6470d5feac8176efe25a44b327234c5d2d265b2cf4f490c3fa09dea63720a94be6489cf98cd30
-  languageName: node
-  linkType: hard
-
-"@wppconnect/wa-version@npm:^1.5.3379":
-  version: 1.5.3523
-  resolution: "@wppconnect/wa-version@npm:1.5.3523"
+"@wppconnect/wa-version@npm:^1.5.3731":
+  version: 1.5.3822
+  resolution: "@wppconnect/wa-version@npm:1.5.3822"
   dependencies:
     node-fetch: "npm:^2.7.0"
     semver: "npm:^7.7.4"
-  checksum: 10/b17403a96bae203db9db672c39f243702b979dc9da5a9c23082a9c0b63d67aa8e5e374aeca0ed24817fbd45eb9e906431753199ddb15decb77a9e4c67d624341
+  checksum: 10/8d9ec0bd5901921c3d8f89d3d9c360047a24073eb93b11a69ec0fccf1a41a10e53c869e96a965411fab9b88f80bab2b14bd60ccdcc2c3c531fc5c493cd6f564a
   languageName: node
   linkType: hard
 
@@ -11914,12 +11907,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sanitize-filename@npm:^1.6.3":
-  version: 1.6.3
-  resolution: "sanitize-filename@npm:1.6.3"
+"sanitize-filename@npm:^1.6.4":
+  version: 1.6.4
+  resolution: "sanitize-filename@npm:1.6.4"
   dependencies:
     truncate-utf8-bytes: "npm:^1.0.0"
-  checksum: 10/1c162e2cffa797571221c3ed9fe796fa8c6eabb0812418b52a839e4fc63ab130093eb546ec39e1b94b8d3511c0d7de81db3e67906a7e76d7a7bcb6fbab4ed961
+  checksum: 10/9fb32f8ae51b1931eb4f780ac140f3fa9ccbfd8c746231d426cd5f0bc95608557e6e2540186bab81a702b98cd301b622f4a80d3263d82680bebca90a38158b38
   languageName: node
   linkType: hard
 
@@ -13553,8 +13546,8 @@ __metadata:
     "@types/supertest": "npm:^2.0.8"
     "@types/user-agents": "npm:^1"
     "@types/ws": "npm:^8.5.4"
-    "@wppconnect-team/wppconnect": "npm:^1.41.1"
-    "@wppconnect/wa-js": "npm:^3.23.3"
+    "@wppconnect-team/wppconnect": "npm:^1.41.3"
+    "@wppconnect/wa-js": "npm:^3.23.4"
     adm-zip: "npm:0.5.10"
     agentkeepalive: "npm:^4.5.0"
     async-lock: "npm:^1.4.1"
