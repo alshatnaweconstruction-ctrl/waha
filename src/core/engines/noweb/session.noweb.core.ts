@@ -72,7 +72,7 @@ import { pairs } from '@waha/utils/pairs';
 import { ExtractMessageKeysForRead } from '@waha/core/utils/convertors';
 import { parseMessageIdSerialized } from '@waha/core/utils/ids';
 import { isJidNewsletter, toCusFormat, toJID } from '@waha/core/utils/jids';
-import { DistinctAck } from '@waha/core/utils/reactive';
+import { DistinctAck, DistinctMessages } from '@waha/core/utils/reactive';
 import { flipObject, splitAt } from '@waha/helpers';
 import { PairingCodeResponse } from '@waha/structures/auth.dto';
 import { CallData } from '@waha/structures/calls.dto';
@@ -2079,10 +2079,14 @@ export class WhatsappSessionNoWebCore extends WhatsappSession {
     );
     messagesFromMe$ = messagesFromMe$.pipe(
       mergeMap((msg) => this.processIncomingMessage(msg, true)),
+      filter(Boolean),
+      DistinctMessages(),
       share(), // share it so we don't process twice in message.any
     );
     messagesFromOthers$ = messagesFromOthers$.pipe(
       mergeMap((msg) => this.processIncomingMessage(msg, true)),
+      filter(Boolean),
+      DistinctMessages(),
       share(), // share it so we don't process twice in message.any
     );
     const messagesFromAll$ = merge(messagesFromMe$, messagesFromOthers$);
