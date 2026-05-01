@@ -257,7 +257,7 @@ export class AppModuleCore {
     consumer
       .apply(ApiKeyAuthMiddleware)
       .exclude(...exclude)
-      .forRoutes('api', 'health');
+      .forRoutes('api', 'health', 'mcp');
 
     // Dashboard
     const dashboardCredentials = this.dashboardConfig.credentials;

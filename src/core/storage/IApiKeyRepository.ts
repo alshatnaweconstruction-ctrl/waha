@@ -7,6 +7,7 @@ export interface ApiKey {
   isAdmin: boolean;
   session: string | null;
   actions: SessionActions | null;
+  app_id?: string | null;
 }
 
 export interface IApiKeyRepository {

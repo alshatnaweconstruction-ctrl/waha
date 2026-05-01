@@ -37,7 +37,7 @@ export class ApiKeyService {
     this.repository = manager.apiKeyRepository;
   }
 
-  async create(body: ApiKeyRequest): Promise<ApiKeyDTO> {
+  async create(body: ApiKeyRequest, appId?: string): Promise<ApiKeyDTO> {
     CheckInvariant(body);
     if (body.session) {
       const exists = await this.manager.exists(body.session);
@@ -56,6 +56,7 @@ export class ApiKeyService {
         isAdmin: body.isAdmin,
         session: body.session,
         actions: body.actions ?? null,
+        app_id: appId ?? null,
       };
       const idExists = await this.repository.getById(apikey.id);
       if (idExists) {
@@ -87,6 +88,11 @@ export class ApiKeyService {
     if (!existing) {
       throw new NotFoundException('API key not found');
     }
+    if (existing.app_id) {
+      throw new UnprocessableEntityException(
+        `This API key is managed by app '${existing.app_id}'. Update the app instead of the key.`,
+      );
+    }
     const apikey: ApiKey = {
       ...existing,
       isActive: body.isActive,
@@ -113,8 +119,50 @@ export class ApiKeyService {
     if (!existing) {
       throw new NotFoundException('API key not found');
     }
+    if (existing.app_id) {
+      const appExists = await this.manager.store
+        .getWAHADatabase()('apps')
+        .where('id', existing.app_id)
+        .first();
+      if (appExists) {
+        throw new UnprocessableEntityException(
+          `This API key is managed by app '${existing.app_id}'. Delete the app instead of the key.`,
+        );
+      }
+    }
     await this.repository.deleteById(id);
     return { result: true };
+  }
+
+  async createForApp(body: ApiKeyRequest, appId: string): Promise<ApiKeyDTO> {
+    return this.create(body, appId);
+  }
+
+  async deleteForApp(id: string): Promise<void> {
+    const existing = await this.repository.getById(id);
+    if (!existing) {
+      return;
+    }
+    await this.repository.deleteById(id);
+  }
+
+  async updateForApp(
+    id: string,
+    updates: Partial<Pick<ApiKey, 'isActive' | 'actions'>>,
+  ): Promise<void> {
+    const existing = await this.repository.getById(id);
+    if (!existing) {
+      return;
+    }
+    await this.repository.upsert({ ...existing, ...updates });
+  }
+
+  async getById(id: string): Promise<ApiKeyDTO | null> {
+    const existing = await this.repository.getById(id);
+    if (!existing) {
+      return null;
+    }
+    return this.toDTO(existing);
   }
 
   private toDTO(apikey: ApiKey): ApiKeyDTO {

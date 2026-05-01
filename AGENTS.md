@@ -51,12 +51,19 @@ This guide summarizes how to explore, modify, and validate the WhatsApp HTTP API
 - Respect path aliases (`@waha/...`) defined in `tsconfig.json`
 - Prefer named function declarations over `const` arrow functions
 - Avoid naming unused variables with a leading underscore
+- Always use explicit property names in object literals — never shorthand: write
+  `{ key: value }`, not `{ value }` (even when the variable name matches the
+  key)
 - Do not write verbose ternaries; use idiomatic helpers like `??` (nullish
   coalescing)
-- Do not place `await` or other async calls inside ternary expressions (`?:`);
-  use explicit `if/else` blocks
+- Do not place `await` or other async calls inside ternary expressions (`?:`) or
+  nullish-coalescing expressions (`??`); use explicit `if/else` blocks or assign
+  the awaited value to a variable first
 - For configs, prefer runtime configurability over constants (environment keys
   follow `WAHA_*` and `WAHA_SESSION_CONFIG_*`)
+- Do not use decorative comment blocks (lines of dashes/underscores with a
+  label) such as `// ─────────── NAME ───────────`; use plain inline comments or
+  no comment at all
 
 ## How to Run API
 
@@ -85,6 +92,35 @@ npm run start
   an idle period
 - Skip it on methods that only throw `NotImplementedByEngineError` /
   `AvailableInPlusVersion`
+
+## MCP Tools
+
+MCP tools live in `src/apps/mcp/tools/` and expose the HTTP API to AI clients.
+Each tool file mirrors an API domain (e.g. `chats.tools.ts` → chats endpoints).
+
+**When you change an existing API endpoint:**
+
+- Check the corresponding `*.tools.ts` file and update the tool's `inputSchema`,
+  description, or behavior if the API signature changed.
+
+**When you add a new API endpoint:**
+
+- Ask the user whether an MCP tool is needed for the new endpoint before
+  creating one.
+- If yes, add the tool to the matching `*.tools.ts` file (or create a new file
+  for a new domain).
+- Every `@Tool` decorator must include an `annotations` block with all three
+  fields:
+  ```typescript
+  annotations: {
+    readOnlyHint: true | false,   // true = no side effects (GET-style)
+    destructiveHint: true | false, // true = irreversible deletion/logout
+    idempotentHint: true | false,  // true = safe to repeat with same args
+  }
+  ```
+- Input schemas live in the matching `*.zod.ts` file.
+- Tools call the API via `this.textRequest({ method, url, ... })` inherited from
+  `McpController`.
 
 ## Related Sources
 

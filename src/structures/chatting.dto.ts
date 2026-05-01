@@ -189,6 +189,7 @@ export class MessageTextRequest extends ChatRequest {
   mentions?: string[];
 
   @ReplyToProperty()
+  @IsOptional()
   reply_to?: string;
 
   linkPreview?: boolean = true;
