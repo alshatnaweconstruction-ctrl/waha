@@ -2771,6 +2771,7 @@ export class WhatsappSessionNoWebCore extends WhatsappSession {
   }
 
   protected async getMessageOptions(request: {
+    id?: string;
     chatId: string;
     reply_to?: string;
   }) {
@@ -2782,7 +2783,8 @@ export class WhatsappSessionNoWebCore extends WhatsappSession {
       quoted = await this.store.loadMessage(jid, key.id);
     }
     const chat = await this.store.getChat(jid);
-    const messageId = this.generateMessageID();
+    const messageId = request.id ? request.id : this.generateMessageID();
+    this.saveSentMessageId(messageId);
     return {
       quoted: quoted,
       ephemeralExpiration: chat?.ephemeralExpiration,
