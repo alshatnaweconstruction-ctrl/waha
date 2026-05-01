@@ -41,6 +41,7 @@ import {
   MessageTextRequest,
   MessageVideoRequest,
   MessageVoiceRequest,
+  NewMessageIDResponse,
   SendSeenRequest,
   WANumberExistResult,
 } from '../structures/chatting.dto';
@@ -49,9 +50,19 @@ import {
   mentionsAll,
   validateRequestMentions,
 } from '@waha/core/utils/mentions.all';
+import {
+  SessionApiParam,
+  WorkingSessionParam,
+} from '@waha/nestjs/params/SessionApiParam';
+import { WhatsappSession } from '@waha/core/abc/session.abc';
 import { PoliciesGuard } from '@waha/core/auth/policies.guard';
 import { CheckPolicies } from '@waha/core/auth/policies.decorator';
-import { CanSession, FromBody, FromQuery } from '@waha/core/auth/policies';
+import {
+  CanSession,
+  FromBody,
+  FromParam,
+  FromQuery,
+} from '@waha/core/auth/policies';
 
 import { Action } from '@waha/core/auth/casl.types';
 
@@ -346,5 +357,16 @@ export class ChattingController {
   async sendLinkPreview_DEPRECATED(@Body() request: MessageLinkPreviewRequest) {
     const whatsapp = await this.manager.getWorkingSession(request.session);
     return whatsapp.sendLinkPreview(request);
+  }
+
+  @Get('/:session/new-message-id')
+  @SessionApiParam
+  @ApiOperation({ summary: 'Generate a new message ID' })
+  @CheckPolicies(CanSession(Action.Use, FromParam('session')))
+  async getNewMessageId(
+    @WorkingSessionParam session: WhatsappSession,
+  ): Promise<NewMessageIDResponse> {
+    const id = await session.generateNewMessageId();
+    return { id: id };
   }
 }
