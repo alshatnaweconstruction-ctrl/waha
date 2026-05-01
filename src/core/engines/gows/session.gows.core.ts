@@ -931,6 +931,7 @@ export class WhatsappSessionGoWSCore extends WhatsappSession {
   async sendText(request: MessageTextRequest) {
     const jid = normalizeJid(toJID(this.ensureSuffix(request.chatId)));
     const message = new messages.MessageRequest({
+      id: request.id,
       jid: jid,
       text: request.text,
       session: this.session,
@@ -976,6 +977,7 @@ export class WhatsappSessionGoWSCore extends WhatsappSession {
       vcard: toVcardV3(el),
     }));
     const message = new messages.MessageRequest({
+      id: request.id,
       jid: jid,
       session: this.session,
       replyTo: getMessageIdFromSerialized(request.reply_to),
@@ -990,6 +992,7 @@ export class WhatsappSessionGoWSCore extends WhatsappSession {
   async sendPoll(request: MessagePollRequest) {
     const jid = normalizeJid(toJID(request.chatId));
     const message = new messages.MessageRequest({
+      id: request.id,
       jid: jid,
       session: this.session,
       replyTo: getMessageIdFromSerialized(request.reply_to),
@@ -1109,6 +1112,7 @@ export class WhatsappSessionGoWSCore extends WhatsappSession {
   async sendLocation(request: MessageLocationRequest) {
     const jid = normalizeJid(toJID(this.ensureSuffix(request.chatId)));
     const message = new messages.MessageRequest({
+      id: request.id,
       jid: jid,
       session: this.session,
       replyTo: getMessageIdFromSerialized(request.reply_to),
