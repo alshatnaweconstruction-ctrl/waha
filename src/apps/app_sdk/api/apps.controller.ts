@@ -47,7 +47,7 @@ export class AppsController {
 
   @Get('/')
   @ApiOperation({ summary: 'List all apps for a session' })
-  @CheckPolicies(CanSession(Action.Use, FromQuery('session')))
+  @CheckPolicies(CanSession(Action.App, FromQuery('session')))
   @UsePipes(new WAHAValidationPipe())
   async list(
     @Query(new WAHAValidationPipe()) query: ListAppsQuery,
@@ -57,7 +57,7 @@ export class AppsController {
 
   @Post('/')
   @ApiOperation({ summary: 'Create a new app' })
-  @CheckPolicies(CanSession(Action.Use, FromBody('session')))
+  @CheckPolicies(CanSession(Action.App, FromBody('session')))
   @UsePipes(new WAHAValidationPipe())
   async create(@Body() app: App): Promise<App> {
     const result = await this.appsService.create(this.manager, app);
@@ -70,14 +70,14 @@ export class AppsController {
 
   @Get('/:id')
   @ApiOperation({ summary: 'Get app by ID' })
-  @CheckPolicies(CanServer(Action.Read))
+  @CheckPolicies(CanServer(Action.Retrieve))
   @UsePipes(new WAHAValidationPipe())
   async get(@Param('id') id: string, @Req() req: any): Promise<App> {
     const app = await this.appsService.get(this.manager, id);
     if (!app) {
       throw new NotFoundException(`App '${id}' not found`);
     }
-    if (!req.ability?.can(Action.Use, new SessionName(app.session))) {
+    if (!req.ability?.can(Action.App, new SessionName(app.session))) {
       throw new ForbiddenException();
     }
     return app;
@@ -85,7 +85,7 @@ export class AppsController {
 
   @Put('/:id')
   @ApiOperation({ summary: 'Update an existing app' })
-  @CheckPolicies(CanServer(Action.Read))
+  @CheckPolicies(CanServer(Action.Retrieve))
   @UsePipes(new WAHAValidationPipe())
   async update(
     @Param('id') id: string,
@@ -94,11 +94,11 @@ export class AppsController {
   ): Promise<App> {
     const existing = await this.appsService.get(this.manager, id);
     if (existing) {
-      if (!req.ability?.can(Action.Use, new SessionName(existing.session))) {
+      if (!req.ability?.can(Action.App, new SessionName(existing.session))) {
         throw new ForbiddenException();
       }
     } else {
-      if (!req.ability?.can(Action.Use, new SessionName(app.session))) {
+      if (!req.ability?.can(Action.App, new SessionName(app.session))) {
         throw new ForbiddenException();
       }
     }
@@ -121,14 +121,14 @@ export class AppsController {
 
   @Delete('/:id')
   @ApiOperation({ summary: 'Delete an app' })
-  @CheckPolicies(CanServer(Action.Read))
+  @CheckPolicies(CanServer(Action.Retrieve))
   @UsePipes(new WAHAValidationPipe())
   async delete(@Param('id') id: string, @Req() req: any): Promise<void> {
     const existing = await this.appsService.get(this.manager, id);
     if (!existing) {
       throw new NotFoundException(`App '${id}' not found`);
     }
-    if (!req.ability?.can(Action.Use, new SessionName(existing.session))) {
+    if (!req.ability?.can(Action.App, new SessionName(existing.session))) {
       throw new ForbiddenException();
     }
     const app = await this.appsService.delete(this.manager, id);

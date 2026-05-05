@@ -66,7 +66,7 @@ class SessionsController {
   ): Promise<SessionInfo[]> {
     let sessions = await this.sessionService.getSessions(query.all);
     if (!req.user?.isAdmin) {
-      sessions = FilterSessions(req.ability, Action.Read, sessions);
+      sessions = FilterSessions(req.ability, Action.Retrieve, sessions);
     }
     if (query.expand?.includes(SessionExpand.apps)) {
       await this.sessionService.expandSessionApps(sessions);
@@ -77,7 +77,7 @@ class SessionsController {
   @Get('/:session')
   @ApiOperation({ summary: 'Get session information' })
   @SessionApiParam
-  @CheckPolicies(CanSession(Action.Use, FromParam('session')))
+  @CheckPolicies(CanSession(Action.Read, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async get(
     @Param('session') name: string,
@@ -93,7 +93,7 @@ class SessionsController {
   @Get(':session/me')
   @SessionApiParam
   @ApiOperation({ summary: 'Get information about the authenticated account' })
-  @CheckPolicies(CanSession(Action.Use, FromParam('session')))
+  @CheckPolicies(CanSession(Action.Read, FromParam('session')))
   getMe(@SessionParam session: WhatsappSession): MeInfo | null {
     return this.sessionService.getSessionMe(session);
   }
@@ -115,7 +115,7 @@ class SessionsController {
   @ApiOperation({ summary: 'Update a session' })
   @SessionApiParam
   @ApiBody({ type: SessionUpdateRequest, examples: SessionExamples })
-  @CheckPolicies(CanSession(Action.Use, FromParam('session')))
+  @CheckPolicies(CanSession(Action.Setting, FromParam('session')))
   @UsePipes(new WAHAValidationPipe({ forbidNonWhitelisted: false }))
   async update(
     @Param('session') name: string,
@@ -144,7 +144,7 @@ class SessionsController {
     description:
       'Start the session with the given name. The session must exist. Idempotent operation.',
   })
-  @CheckPolicies(CanSession(Action.Use, FromParam('session')))
+  @CheckPolicies(CanSession(Action.Control, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async start(@Param('session') name: string): Promise<SessionDTO> {
     return this.sessionService.startSession(name);
@@ -156,7 +156,7 @@ class SessionsController {
     summary: 'Stop the session',
     description: 'Stop the session with the given name. Idempotent operation.',
   })
-  @CheckPolicies(CanSession(Action.Use, FromParam('session')))
+  @CheckPolicies(CanSession(Action.Control, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async stop(@Param('session') name: string): Promise<SessionDTO> {
     return this.sessionService.stopSession(name);
@@ -168,7 +168,7 @@ class SessionsController {
     summary: 'Logout from the session',
     description: 'Logout the session, restart a session if it was not STOPPED',
   })
-  @CheckPolicies(CanSession(Action.Use, FromParam('session')))
+  @CheckPolicies(CanSession(Action.Control, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async logout(@Param('session') name: string): Promise<SessionDTO> {
     return this.sessionService.logoutSession(name);
@@ -180,7 +180,7 @@ class SessionsController {
     summary: 'Restart the session',
     description: 'Restart the session with the given name.',
   })
-  @CheckPolicies(CanSession(Action.Use, FromParam('session')))
+  @CheckPolicies(CanSession(Action.Control, FromParam('session')))
   @UsePipes(new WAHAValidationPipe())
   async restart(@Param('session') name: string): Promise<SessionDTO> {
     return this.sessionService.restartSession(name);
@@ -193,7 +193,7 @@ class SessionsController {
       'Create session (if not exists) or update a config (if exists) and start it.',
     deprecated: true,
   })
-  @CheckPolicies(CanSession(Action.Use, FromBody('name')))
+  @CheckPolicies(CanSession(Action.Control, FromBody('name')))
   async DEPRACATED_start(
     @Body() request: SessionStartDeprecatedRequest,
   ): Promise<SessionDTO> {
@@ -217,7 +217,7 @@ class SessionsController {
     description: 'Stop session and Logout by default.',
     deprecated: true,
   })
-  @CheckPolicies(CanSession(Action.Use, FromBody('name')))
+  @CheckPolicies(CanSession(Action.Control, FromBody('name')))
   async DEPRECATED_stop(
     @Body() request: SessionStopDeprecatedRequest,
   ): Promise<void> {
@@ -237,7 +237,7 @@ class SessionsController {
     description: 'Stop, Logout and Delete session.',
     deprecated: true,
   })
-  @CheckPolicies(CanSession(Action.Use, FromBody('name')))
+  @CheckPolicies(CanSession(Action.Control, FromBody('name')))
   async DEPRECATED_logout(
     @Body() request: SessionLogoutDeprecatedRequest,
   ): Promise<void> {

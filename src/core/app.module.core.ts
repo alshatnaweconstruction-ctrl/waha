@@ -68,7 +68,7 @@ import { WAHAHealthCheckServiceCore } from './health/WAHAHealthCheckServiceCore'
 import { SessionManagerCore } from './manager.core';
 import { CaslAbilityFactory } from '@waha/core/auth/casl.ability';
 import { PoliciesGuard } from '@waha/core/auth/policies.guard';
-import { ApiKeyService } from '@waha/core/auth/ApiKeyService';
+import { ApiKeyAuthService } from './auth/ApiKeyAuthService';
 import { SessionService } from '@waha/core/services/SessionService';
 
 export const IMPORTS_CORE = [
@@ -186,7 +186,7 @@ export const PROVIDERS_BASE: Provider[] = [
   MediaLocalStorageConfig,
   WebSocketAuth,
   ApiKeyStrategy,
-  ApiKeyService,
+  ApiKeyAuthService,
   CaslAbilityFactory,
   PoliciesGuard,
   SessionService,

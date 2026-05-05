@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { IApiKeyAuth } from '@waha/core/auth/auth';
+import { SessionActions } from '@waha/core/auth/casl.types';
 import { HeaderAPIKeyStrategy } from 'passport-headerapikey';
-import { ApiKeyService } from '@waha/core/auth/ApiKeyService';
+import { ApiKeyAuthService } from './ApiKeyAuthService';
 
 export interface User {
   isAdmin: boolean;
   session?: string;
+  actions?: SessionActions | null;
 }
 
 function AdminUser(): User {
@@ -20,7 +22,7 @@ function AdminUser(): User {
 export class ApiKeyStrategy extends PassportStrategy(HeaderAPIKeyStrategy) {
   constructor(
     private auth: IApiKeyAuth,
-    private apiKeyService: ApiKeyService,
+    private apiKeyService: ApiKeyAuthService,
   ) {
     // @ts-ignore
     super({ header: 'X-Api-Key', prefix: '' }, true, (apikey, done) => {
