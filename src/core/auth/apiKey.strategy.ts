@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { IApiKeyAuth } from '@waha/core/auth/auth';
 import { SessionActions } from '@waha/core/auth/casl.types';
-import { HeaderAPIKeyStrategy } from 'passport-headerapikey';
+import { HeaderOrQueryApiKeyStrategy } from '@waha/core/auth/HeaderOrQueryApiKeyStrategy';
 import { ApiKeyAuthService } from './ApiKeyAuthService';
 
 export interface User {
@@ -19,13 +19,15 @@ function AdminUser(): User {
 }
 
 @Injectable()
-export class ApiKeyStrategy extends PassportStrategy(HeaderAPIKeyStrategy) {
+export class ApiKeyStrategy extends PassportStrategy(
+  HeaderOrQueryApiKeyStrategy,
+) {
   constructor(
     private auth: IApiKeyAuth,
     private apiKeyService: ApiKeyAuthService,
   ) {
-    // @ts-ignore
-    super({ header: 'X-Api-Key', prefix: '' }, true, (apikey, done) => {
+    // @ts-ignore — PassportStrategy mixin doesn't forward constructor arg types
+    super(true, (apikey, done) => {
       return this.validate(apikey, done);
     });
   }

@@ -34,6 +34,7 @@ import {
   getPinoHttpUseLevel,
   getPinoLogLevel,
   getPinoTransport,
+  redactUrlParams,
 } from '@waha/utils/logging';
 import * as Joi from 'joi';
 import { LoggerModule } from 'nestjs-pino';
@@ -91,11 +92,15 @@ export const IMPORTS_CORE = [
           );
         },
       },
+      redact: {
+        paths: ['req.query["x-api-key"]'],
+        censor: '[REDACTED]',
+      },
       serializers: {
         req: (req) => ({
           id: req.id,
           method: req.method,
-          url: req.url,
+          url: redactUrlParams('x-api-key', req.url, req.query),
           query: req.query,
           params: req.params,
         }),
