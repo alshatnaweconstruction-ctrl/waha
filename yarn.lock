@@ -6,23 +6,23 @@ __metadata:
   cacheKey: 10
 
 "@adiwajshing/baileys@github:devlikeapro/Baileys#fork-master-2026-04-28":
-  version: 7.0.0-rc.9
-  resolution: "@adiwajshing/baileys@https://github.com/devlikeapro/Baileys.git#commit=beb02b509bbdcc4678a5628dcd98d397b3faf80f"
+  version: 7.0.0-rc10
+  resolution: "@adiwajshing/baileys@https://github.com/devlikeapro/Baileys.git#commit=a56f2c88eac278b589101278a2d5e8f343fd0321"
   dependencies:
     "@cacheable/node-cache": "npm:^1.4.0"
     "@hapi/boom": "npm:^9.1.3"
     async-mutex: "npm:^0.5.0"
     libsignal: "git+https://github.com/whiskeysockets/libsignal-node"
     lru-cache: "npm:^11.1.0"
-    music-metadata: "npm:11.12.1"
+    music-metadata: "npm:^11.12.3"
     p-queue: "npm:^9.0.0"
     pino: "npm:^9.6"
-    protobufjs: "npm:^7.2.4"
+    protobufjs: "npm:^7.5.6"
     whatsapp-rust-bridge: "npm:0.5.3"
     ws: "npm:^8.13.0"
   peerDependencies:
     audio-decode: ^2.1.3
-    jimp: ^1.6.0
+    jimp: ^1.6.1
     link-preview-js: ^3.0.0
     sharp: "*"
   peerDependenciesMeta:
@@ -32,7 +32,7 @@ __metadata:
       optional: true
     link-preview-js:
       optional: true
-  checksum: 10/1aa6fc0581e8e315dad0f5bb0b34466b04d10a762bf1690e988042f711a24050c2736cbe7f90276cac383d495d8c28d04e977b2b4f67f72c8f3d52d8175bcf37
+  checksum: 10/a6eb9438f1d32ccad2d46c8ee84e8e3c448c6ba43bd0d28f2b88f414bcbe46d5e1802a59a8a2866ed73c02e13ada98c35aa996a4545b9db02068a5ca8ad41116
   languageName: node
   linkType: hard
 
@@ -1179,7 +1179,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@borewit/text-codec@npm:^0.2.1":
+"@borewit/text-codec@npm:^0.2.1, @borewit/text-codec@npm:^0.2.2":
   version: 0.2.2
   resolution: "@borewit/text-codec@npm:0.2.2"
   checksum: 10/c971790a72d9e766286db71f68613d1bac3b8bd9eaba52fbf18a8b17903c095968ed5369efdba378751926440aab93f3dd17c89242ef20525808ddced22d49b8
@@ -2886,6 +2886,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@protobufjs/codegen@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "@protobufjs/codegen@npm:2.0.5"
+  checksum: 10/290335fa114f26202abc0695f279d53e2fd516b01cfd8298923591e0bda011295ff40e3582a1cda0a0f27cbc5039a0292082d5ad08872bb5d6243a614ac15c88
+  languageName: node
+  linkType: hard
+
 "@protobufjs/eventemitter@npm:^1.1.0":
   version: 1.1.0
   resolution: "@protobufjs/eventemitter@npm:1.1.0"
@@ -2917,6 +2924,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@protobufjs/inquire@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@protobufjs/inquire@npm:1.1.1"
+  checksum: 10/504740e8ac348f70b33bcf6a20c83d5b9679901654c1a96b18c0491ec2f2f7ac580e74019b6d1bce16113bfb9746bc6e7dfd4e12a717deed699675b7f230ce9e
+  languageName: node
+  linkType: hard
+
 "@protobufjs/path@npm:^1.1.2":
   version: 1.1.2
   resolution: "@protobufjs/path@npm:1.1.2"
@@ -2935,6 +2949,13 @@ __metadata:
   version: 1.1.0
   resolution: "@protobufjs/utf8@npm:1.1.0"
   checksum: 10/131e289c57534c1d73a0e55782d6751dd821db1583cb2f7f7e017c9d6747addaebe79f28120b2e0185395d990aad347fb14ffa73ef4096fa38508d61a0e64602
+  languageName: node
+  linkType: hard
+
+"@protobufjs/utf8@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@protobufjs/utf8@npm:1.1.1"
+  checksum: 10/ed0c3f9ff1afd602a0aed54c4c03a0b8f641686a5587d8949e088dcac653fb2019d15691ed92eef23dfdf9f4293249532d0508ecd15cef810acf026917719a19
   languageName: node
   linkType: hard
 
@@ -7349,7 +7370,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-type@npm:^21.3.0":
+"file-type@npm:^21.3.1":
   version: 21.3.4
   resolution: "file-type@npm:21.3.4"
   dependencies:
@@ -10240,21 +10261,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"music-metadata@npm:11.12.1":
-  version: 11.12.1
-  resolution: "music-metadata@npm:11.12.1"
+"music-metadata@npm:^11.12.3":
+  version: 11.12.3
+  resolution: "music-metadata@npm:11.12.3"
   dependencies:
-    "@borewit/text-codec": "npm:^0.2.1"
+    "@borewit/text-codec": "npm:^0.2.2"
     "@tokenizer/token": "npm:^0.3.0"
     content-type: "npm:^1.0.5"
     debug: "npm:^4.4.3"
-    file-type: "npm:^21.3.0"
+    file-type: "npm:^21.3.1"
     media-typer: "npm:^1.1.0"
     strtok3: "npm:^10.3.4"
     token-types: "npm:^6.1.2"
     uint8array-extras: "npm:^1.5.0"
     win-guid: "npm:^0.2.1"
-  checksum: 10/ee17875b85579e885e13e843caf429ab95362b39c1c526172ca896a5599ecfb78d7ed01b8ed51342d04c6a1a6e55b66924573eee2236be4f2698d9d6ac29be4f
+  checksum: 10/ad030b9b303afa98b08586d9b5f43719afce59b743071f42fba928d84925e849c188798522feab196f293b503fe98f7ea3a53866968bd7705ec6c8a7d5fea059
   languageName: node
   linkType: hard
 
@@ -11399,26 +11420,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^7.2.4":
-  version: 7.5.3
-  resolution: "protobufjs@npm:7.5.3"
-  dependencies:
-    "@protobufjs/aspromise": "npm:^1.1.2"
-    "@protobufjs/base64": "npm:^1.1.2"
-    "@protobufjs/codegen": "npm:^2.0.4"
-    "@protobufjs/eventemitter": "npm:^1.1.0"
-    "@protobufjs/fetch": "npm:^1.1.0"
-    "@protobufjs/float": "npm:^1.0.2"
-    "@protobufjs/inquire": "npm:^1.1.0"
-    "@protobufjs/path": "npm:^1.1.2"
-    "@protobufjs/pool": "npm:^1.1.0"
-    "@protobufjs/utf8": "npm:^1.1.0"
-    "@types/node": "npm:>=13.7.0"
-    long: "npm:^5.0.0"
-  checksum: 10/3e412d2e2f799875dcdac1b43508f465a499dd3ffd9d24073669702589ef016529905617a12a967b1a8cfbe803a638b494cc3ed8db035605c7570d1a7fc094c9
-  languageName: node
-  linkType: hard
-
 "protobufjs@npm:^7.5.3":
   version: 7.5.4
   resolution: "protobufjs@npm:7.5.4"
@@ -11436,6 +11437,26 @@ __metadata:
     "@types/node": "npm:>=13.7.0"
     long: "npm:^5.0.0"
   checksum: 10/88d677bb6f11a2ecec63fdd053dfe6d31120844d04e865efa9c8fbe0674cd077d6624ecfdf014018a20dcb114ae2a59c1b21966dd8073e920650c71370966439
+  languageName: node
+  linkType: hard
+
+"protobufjs@npm:^7.5.6":
+  version: 7.5.6
+  resolution: "protobufjs@npm:7.5.6"
+  dependencies:
+    "@protobufjs/aspromise": "npm:^1.1.2"
+    "@protobufjs/base64": "npm:^1.1.2"
+    "@protobufjs/codegen": "npm:^2.0.5"
+    "@protobufjs/eventemitter": "npm:^1.1.0"
+    "@protobufjs/fetch": "npm:^1.1.0"
+    "@protobufjs/float": "npm:^1.0.2"
+    "@protobufjs/inquire": "npm:^1.1.1"
+    "@protobufjs/path": "npm:^1.1.2"
+    "@protobufjs/pool": "npm:^1.1.0"
+    "@protobufjs/utf8": "npm:^1.1.1"
+    "@types/node": "npm:>=13.7.0"
+    long: "npm:^5.0.0"
+  checksum: 10/13d7ab5b5d588b704476a600506cda9f647e2f657faf5a18e8866ce5b04800026a508a4958673e4d5674090bbc528717b01128f8e226055d56e90745e3ee6ada
   languageName: node
   linkType: hard
 
