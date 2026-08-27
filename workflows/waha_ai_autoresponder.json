@@ -1,0 +1,110 @@
+﻿{
+  "name": "WAHA AI Smart Auto-Responder",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "waha-ai",
+        "options": {}
+      },
+      "name": "WAHA Webhook Inbound",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "waha-ai-webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.body.payload.fromMe }}",
+              "value2": false
+            }
+          ]
+        }
+      },
+      "name": "Check Not From Me",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "senderPhone",
+              "value": "={{ $json.body.payload.from }}"
+            },
+            {
+              "name": "incomingText",
+              "value": "={{ $json.body.payload.body }}"
+            },
+            {
+              "name": "replyMessage",
+              "value": "Thank you for contacting us! We received your message and our team will get back to you shortly."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Prepare Automated Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [640, 280]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://waha:3000/api/sendText",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"session\": \"default\",\n  \"chatId\": \"{{ $json.senderPhone }}\",\n  \"text\": \"{{ $json.replyMessage }}\"\n}",
+        "options": {}
+      },
+      "name": "Dispatch WAHA Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [840, 280]
+    }
+  ],
+  "connections": {
+    "WAHA Webhook Inbound": {
+      "main": [
+        [
+          {
+            "node": "Check Not From Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Not From Me": {
+      "main": [
+        [
+          {
+            "node": "Prepare Automated Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Automated Response": {
+      "main": [
+        [
+          {
+            "node": "Dispatch WAHA Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "1"
+}

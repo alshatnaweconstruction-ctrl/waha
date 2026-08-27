@@ -1,0 +1,24 @@
+﻿name: Validate & Lint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Validate Docker Compose & Workflows
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose File
+        run: |
+          docker compose -f docker-compose/docker-compose.yml config
+
+      - name: Validate JSON Workflow Files
+        run: |
+          python3 -c "import json, glob; [json.load(open(f)) for f in glob.glob('workflows/*.json')]; print('All workflows JSON valid!')"

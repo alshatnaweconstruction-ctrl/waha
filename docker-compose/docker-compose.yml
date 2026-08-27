@@ -1,0 +1,60 @@
+﻿services:
+  # ==========================================
+  # WhatsApp HTTP API (WAHA) Service
+  # ==========================================
+  waha:
+    image: devlikeapro/waha:latest
+    container_name: waha
+    restart: unless-stopped
+    ports:
+      - "${WAHA_PORT:-3000}:3000"
+    environment:
+      - WHATSAPP_API_KEY=${WAHA_API_KEY:-}
+      - WHATSAPP_SWAGGER_CONFIG_ADVANCED=true
+      - WHATSAPP_DEFAULT_ENGINE=${WAHA_ENGINE:-WEBJS}
+      - WHATSAPP_HOOK_URL=${WAHA_WEBHOOK_URL:-http://n8n:5678/webhook/waha}
+      - WHATSAPP_HOOK_EVENTS=${WAHA_HOOK_EVENTS:-message,message.any,state.change}
+    volumes:
+      - ./n8n/sessions:/app/.sessions
+      - ./n8n/media:/app/.media
+    networks:
+      - waha_net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/server/version || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ==========================================
+  # n8n Workflow Automation Engine
+  # ==========================================
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: waha_n8n
+    restart: unless-stopped
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=${N8N_BASIC_AUTH_ACTIVE:-false}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=${N8N_PROTOCOL:-http}
+      - NODE_ENV=production
+      - WEBHOOK_URL=${N8N_WEBHOOK_URL:-http://localhost:5678/}
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-UTC}
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - waha_net
+    depends_on:
+      waha:
+        condition: service_started
+
+networks:
+  waha_net:
+    driver: bridge
+
+volumes:
+  n8n_data:
+    driver: local
