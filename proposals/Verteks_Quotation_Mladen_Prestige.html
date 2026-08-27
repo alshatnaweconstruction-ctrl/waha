@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VERTEKS S.A. CONSTRUCTION LTD - Quotation</title>
+<style>
+  @page { size: A4; margin: 16mm 18mm 20mm 18mm;
+    @bottom-center { content: "VERTEKS S.A. CONSTRUCTION LTD  •  Reg. HE 495105  •  Page " counter(page) " of " counter(pages); font-size: 7.5pt; color: #5d6977; } }
+  * { box-sizing: border-box; }
+  body { font-family: 'DejaVu Sans', 'Noto Sans', sans-serif; color: #1A1A2E; font-size: 10pt; line-height: 1.5; margin: 0; }
+  h2 { color: #0D2B4E; font-size: 14pt; margin: 12pt 0 5pt 0; border-bottom: 1pt solid #D9DDE3; padding-bottom: 4pt; page-break-after: avoid; }
+  .content > h2:first-of-type { margin-top: 4pt; }
+  p { margin: 6pt 0; }
+
+  /* Masthead */
+  .masthead { background: #0D2B4E; color: #fff; padding: 12pt 16pt; display: flex; justify-content: space-between; align-items: center; border-radius: 3pt; margin-bottom: 14pt; page-break-inside: avoid; }
+  .masthead .brand { display: flex; align-items: center; gap: 10pt; }
+  .masthead .logo-mark { width: 19mm; flex-shrink: 0; }
+  .masthead .brand-text .name { font-size: 16pt; font-weight: bold; letter-spacing: 0.5pt; }
+  .masthead .brand-text .sub { font-size: 7pt; letter-spacing: 1.5pt; color: #C9A94A; font-weight: bold; margin-top: 1pt; }
+  .masthead .brand-text .tag { font-size: 7.5pt; color: #AEBBD1; margin-top: 4pt; letter-spacing: 0.3pt; }
+  .masthead .meta { text-align: right; font-size: 8.5pt; color: #AEBBD1; line-height: 1.65; white-space: nowrap; flex-shrink: 0; margin-left: 14pt; }
+  .masthead .meta .qno { font-size: 12.5pt; font-weight: bold; color: #fff; margin-bottom: 3pt; letter-spacing: 0.3pt; }
+  .masthead .meta b { color: #fff; }
+
+  .doc-kicker { display: inline-block; background: #F4F4F6; color: #0D2B4E; font-size: 8pt; font-weight: bold; letter-spacing: 1.5pt; text-transform: uppercase; padding: 3pt 10pt; border-radius: 2pt; margin-bottom: 7pt; border: 0.75pt solid #D9DDE3; }
+  .doc-title { font-size: 19pt; color: #0D2B4E; font-weight: bold; margin: 4pt 0 3pt 0; line-height: 1.28; }
+  .doc-sub { font-size: 10pt; color: #5d6977; margin-bottom: 4pt; }
+
+  /* Info strips */
+  .info-strip { display: flex; background: #F4F4F6; border: 0.75pt solid #D9DDE3; border-radius: 3pt; margin: 4pt 0 0 0; page-break-inside: avoid; }
+  .info-strip .cell { flex: 1; padding: 8pt 12pt; border-right: 0.75pt solid #D9DDE3; }
+  .info-strip .cell:last-child { border-right: none; }
+  .info-strip .cell .lbl { font-size: 7.3pt; text-transform: uppercase; letter-spacing: 0.8pt; color: #5d6977; font-weight: bold; }
+  .info-strip .cell .val { font-size: 10pt; color: #0D2B4E; font-weight: bold; margin-top: 2pt; }
+  .info-strip.second { border-top: none; border-radius: 0 0 3pt 3pt; margin-top: -1pt; margin-bottom: 10pt; }
+  .info-strip.second .cell:nth-child(3) { visibility: hidden; }
+
+  ul.scope { columns: 2; column-gap: 22pt; margin: 6pt 0; padding-left: 15pt; }
+  ul.scope li { margin-bottom: 5pt; font-size: 9.4pt; break-inside: avoid; }
+
+  /* Package cards — built as a CSS table so all three columns share row heights
+     natively (no flex stretch needed), keeping the price row perfectly aligned
+     regardless of how much each package's bullet text wraps. */
+  .pkg-table { display: table; width: 100%; table-layout: fixed; border-spacing: 7pt 0; margin: 8pt 0 12pt 0; page-break-inside: avoid; }
+  .pkg-row-head, .pkg-row-body, .pkg-row-price { display: table-row; }
+  .pkg-cell { display: table-cell; vertical-align: top; }
+
+  .pkg-row-head .pkg-cell { padding: 10pt 12pt; color: #fff; }
+  .pkg-row-head .pkg-cell .tier { font-size: 14.5pt; font-weight: bold; letter-spacing: 0.3pt; }
+  .pkg-row-head .pkg-cell .kicker { font-size: 7.3pt; letter-spacing: 1pt; text-transform: uppercase; opacity: 0.92; margin-top: 2pt; }
+  .pkg-row-head .tier1 { background: #5d6977; }
+  .pkg-row-head .tier2 { background: #0D2B4E; }
+  .pkg-row-head .tier3 { background: #A8892A; }
+
+  .pkg-row-body .pkg-cell { padding: 10pt 12pt; border-left: 0.75pt solid #D9DDE3; border-right: 0.75pt solid #D9DDE3; background: #fff; }
+  .pkg-row-body .pkg-cell p { font-size: 8.7pt; margin: 0 0 7pt 0; color: #333; }
+  .pkg-row-body .pkg-cell ul { margin: 0; padding-left: 13pt; }
+  .pkg-row-body .pkg-cell ul li { font-size: 8.5pt; margin-bottom: 4.5pt; }
+
+  .pkg-row-price .pkg-cell { padding: 8pt 12pt 12pt 12pt; border: 0.75pt solid #D9DDE3; border-top: none; text-align: center; background: #fff; }
+  .pkg-row-price .amt { font-size: 16.5pt; font-weight: bold; color: #0D2B4E; }
+  .pkg-row-price .note { font-size: 7.3pt; color: #5d6977; margin-top: 1pt; text-transform: uppercase; letter-spacing: 0.4pt; }
+
+  /* Comparison table */
+  table.cmp { width: 100%; border-collapse: collapse; margin: 6pt 0 10pt 0; }
+  table.cmp th { background: #0D2B4E; color: #fff; text-align: left; padding: 5.5pt 9pt; font-size: 9pt; }
+  table.cmp th.center, table.cmp td.center { text-align: center; }
+  table.cmp td { padding: 5.5pt 9pt; border-bottom: 0.75pt solid #D9DDE3; font-size: 9pt; }
+  table.cmp tr:nth-child(even) td { background: #F8F9FA; }
+  table.cmp td.attr { font-weight: bold; color: #0D2B4E; width: 19%; }
+  table.cmp tr.price-row td { background: #0D2B4E !important; color: #fff; font-weight: bold; font-size: 10pt; }
+  table.cmp tr, table.cmp td, table.cmp th { page-break-inside: avoid; }
+
+  .box { border: 0.75pt solid #D9DDE3; border-radius: 3pt; padding: 9pt 12pt; margin: 9pt 0; page-break-inside: avoid; }
+  .box.note { background: #FFF8E8; border-color: #C9A94A; }
+
+  .terms-list, .pay-list { margin: 4pt 0; padding-left: 16pt; }
+  .terms-list li, .pay-list li { margin-bottom: 5.5pt; font-size: 9.4pt; }
+
+  .two-col { display: flex; gap: 20pt; page-break-inside: avoid; }
+  .two-col > div { flex: 1; }
+
+  .pkg-choice { display: flex; gap: 10pt; margin: 10pt 0 16pt 0; }
+  .pkg-choice .opt { flex: 1; border: 0.75pt solid #0D2B4E; border-radius: 3pt; padding: 8pt; text-align: center; font-size: 9pt; }
+  .pkg-choice .opt .box-chk { display: inline-block; width: 9pt; height: 9pt; border: 1pt solid #0D2B4E; margin-right: 5pt; vertical-align: middle; }
+
+  /* Signature grid — table display (with an explicit table-row) avoids the
+     flex-pagination edge cases seen elsewhere in this pipeline. */
+  .signature-grid { display: table; width: 100%; table-layout: fixed; border-spacing: 26pt 0; margin-top: 6pt; }
+  .signature-grid .row { display: table-row; }
+  .signature-grid .col { display: table-cell; vertical-align: top; }
+  .signature-grid .col .role { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.8pt; color: #5d6977; font-weight: bold; margin-bottom: 10pt; }
+  .sig-line { border-top: 0.75pt solid #1A1A2E; margin-top: 26pt; padding-top: 4pt; font-size: 8.5pt; color: #5d6977; }
+
+  .closing { text-align: center; color: #5d6977; font-size: 8.5pt; margin-top: 16pt; }
+
+  .section { page-break-before: always; }
+  h2, li { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+<div class="content">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="20,30 60,30 100,90 140,30 180,30 120,120 80,120" fill="#ffffff"/>
+        <polygon points="75,120 88,120 100,142 112,120 125,120 105,165 95,165" fill="#C9A94A"/>
+        <polygon points="80,95 80,50 100,20 100,95" fill="#ffffff"/>
+        <polygon points="100,95 100,20 120,50 120,95" fill="#C9A94A"/>
+        <rect x="87" y="55" width="2.5" height="40" fill="#0D2B4E"/>
+        <rect x="94" y="55" width="2.5" height="40" fill="#0D2B4E"/>
+        <rect x="103.5" y="55" width="2.5" height="40" fill="#0D2B4E"/>
+        <rect x="110.5" y="55" width="2.5" height="40" fill="#0D2B4E"/>
+      </svg>
+      <div class="brand-text">
+        <div class="name">VERTEKS</div>
+        <div class="sub">— S.A. CONSTRUCTION —</div>
+        <div class="tag">Built with precision  ·  Anapafseos 2, House 3, Paphos 8047, Cyprus</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="qno">VRK-2026-0713-P2</div>
+      Date of Issue: <b>13 July 2026</b><br>
+      Valid Until: <b>12 August 2026</b><br>
+      Prepared By: <b>Ellina Mourantova</b>
+    </div>
+  </div>
+
+  <div class="doc-kicker">Quotation</div>
+  <div class="doc-title">Bathroom Construction, Architectural Modifications &amp; Drainage Installation</div>
+  <div class="doc-sub">Dear Mladen, thank you for the opportunity to quote for your project. Following our site inspection, measurements, and discussion, this quotation sets out three package options so you can choose the finish level that best suits your project.</div>
+
+  <div class="info-strip">
+    <div class="cell"><div class="lbl">Client</div><div class="val">Mladen</div></div>
+    <div class="cell"><div class="lbl">Project Location</div><div class="val">Emba 8250</div></div>
+    <div class="cell"><div class="lbl">Phone</div><div class="val">+357 97 740923</div></div>
+  </div>
+  <div class="info-strip second">
+    <div class="cell"><div class="lbl">Room Dimensions</div><div class="val">3.79 m &times; 2.90 m</div></div>
+    <div class="cell"><div class="lbl">Bathroom Size</div><div class="val">Approx. 1 m &times; 2 m</div></div>
+    <div class="cell"><div class="lbl">—</div><div class="val">—</div></div>
+  </div>
+
+  <h2>Project Description</h2>
+  <p>The project involves the construction of a new gypsum board bathroom within the existing room, together with layout modifications to accommodate the new space and a complete drainage connection to the existing external manhole. Works cover plumbing, electrical, waterproofing, tiling, and finishing through to final site cleaning.</p>
+
+  <h2>Scope of Work</h2>
+  <ul class="scope">
+    <li>Site preparation and protection of existing surfaces</li>
+    <li>Removal and reinstallation of the sliding aluminium door</li>
+    <li>Concrete cutting for the new drainage installation</li>
+    <li>Wall chasing where required for plumbing and electrical routing</li>
+    <li>New drainage installation to the external manhole</li>
+    <li>Plumbing installation</li>
+    <li>Gypsum board partition for the new bathroom</li>
+    <li>Electrical installation</li>
+    <li>Waterproofing</li>
+    <li>Floor and wall tiling</li>
+    <li>Concrete reinstatement</li>
+    <li>Finishing works</li>
+    <li>Waste removal</li>
+    <li>Final site cleaning</li>
+  </ul>
+
+  <!-- PAGE 2: PACKAGES -->
+  <div class="section">
+    <h2>Package Options</h2>
+    <p style="font-size:9.5pt;">The scope of work above is completed in full under every package. What changes is the quality of materials and the level of finishing detail, so you can select the balance that suits your project.</p>
+
+    <div class="pkg-table">
+      <div class="pkg-row-head">
+        <div class="pkg-cell tier1"><div class="tier">Foundation</div><div class="kicker">Smart &amp; Reliable</div></div>
+        <div class="pkg-cell tier2"><div class="tier">Refined</div><div class="kicker">Enhanced Quality</div></div>
+        <div class="pkg-cell tier3"><div class="tier">Prestige</div><div class="kicker">Elevated Finish</div></div>
+      </div>
+      <div class="pkg-row-body">
+        <div class="pkg-cell">
+          <p>A dependable, professional renovation using quality standard materials — a smart, reliable choice.</p>
+          <ul>
+            <li>Standard-grade tiles &amp; fixtures</li>
+            <li>Clean, professional workmanship</li>
+            <li>Reliable waterproofing system</li>
+            <li>Standard accessory selection</li>
+          </ul>
+        </div>
+        <div class="pkg-cell">
+          <p>A step up in material quality and finishing detail, for a more refined result.</p>
+          <ul>
+            <li>Extended tile selection</li>
+            <li>Upgraded sanitary fixtures</li>
+            <li>Enhanced finishing detail</li>
+            <li>Expanded accessory range</li>
+          </ul>
+        </div>
+        <div class="pkg-cell">
+          <p>Our highest level of finish — premium materials and meticulous attention to detail.</p>
+          <ul>
+            <li>Premium tile range &amp; flexibility</li>
+            <li>High-quality sanitary fittings</li>
+            <li>Meticulous finishing detail</li>
+            <li>Full accessory range</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pkg-row-price">
+        <div class="pkg-cell"><div class="amt">&euro;7,850.00</div><div class="note">Final Price</div></div>
+        <div class="pkg-cell"><div class="amt">&euro;8,635.00</div><div class="note">Final Price</div></div>
+        <div class="pkg-cell"><div class="amt">&euro;10,205.00</div><div class="note">Final Price</div></div>
+      </div>
+    </div>
+
+    <h2>Package Comparison</h2>
+    <table class="cmp">
+      <tr><th></th><th class="center">Foundation</th><th class="center">Refined</th><th class="center">Prestige</th></tr>
+      <tr><td class="attr">Included Works</td><td class="center">Full scope as described</td><td class="center">Full scope as described</td><td class="center">Full scope as described</td></tr>
+      <tr><td class="attr">Material Quality</td><td class="center">Standard-grade</td><td class="center">Enhanced-grade</td><td class="center">High-end grade</td></tr>
+      <tr><td class="attr">Tile Selection</td><td class="center">Standard range</td><td class="center">Extended range</td><td class="center">Full premium range</td></tr>
+      <tr><td class="attr">Sanitary Fixtures</td><td class="center">Standard quality</td><td class="center">Upgraded quality</td><td class="center">High quality</td></tr>
+      <tr><td class="attr">Finishing Detail</td><td class="center">Clean &amp; professional</td><td class="center">Enhanced detailing</td><td class="center">Meticulous detailing</td></tr>
+      <tr><td class="attr">Accessories</td><td class="center">Standard selection</td><td class="center">Expanded selection</td><td class="center">Full selection</td></tr>
+      <tr class="price-row"><td class="attr" style="color:#fff;">Final Price</td><td class="center">&euro;7,850.00</td><td class="center">&euro;8,635.00</td><td class="center">&euro;10,205.00</td></tr>
+    </table>
+    <p style="font-size:8pt; color:#5d6977;">All prices are quoted in Euro (€) and are inclusive of VAT at the standard rate applicable in Cyprus.</p>
+  </div>
+
+  <!-- PAGE 3: TERMS -->
+  <div class="section">
+    <h2>General Terms</h2>
+    <ul class="terms-list">
+      <li>Any work outside this agreed scope will be quoted and confirmed separately before proceeding.</li>
+      <li>Should hidden site conditions be discovered once works commence, any additional work required will be discussed and approved with the client in advance.</li>
+      <li>Materials are subject to availability; equivalent alternatives of similar quality will be used where necessary.</li>
+      <li>The work schedule may be affected by weather or site conditions beyond our control.</li>
+    </ul>
+
+    <div class="two-col">
+      <div>
+        <h2>Estimated Duration</h2>
+        <p style="font-size:9.5pt;">Approximately 3 to 4 weeks from the commencement date, depending on site access and material delivery.</p>
+      </div>
+      <div>
+        <h2>Payment Terms</h2>
+        <ul class="pay-list">
+          <li><b>30%</b> deposit upon acceptance</li>
+          <li><b>40%</b> progress payment during construction</li>
+          <li><b>30%</b> final payment upon completion</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="box note">
+      <strong>Validity:</strong> This quotation is valid for 30 days from the date of issue — until 12 August 2026.
+    </div>
+  </div>
+
+  <!-- PAGE 4: ACCEPTANCE -->
+  <div class="section">
+    <h2>Client Acceptance</h2>
+    <p style="font-size:9.5pt;">Please indicate your selected package and sign below to confirm acceptance.</p>
+    <div class="pkg-choice">
+      <div class="opt"><span class="box-chk"></span>Foundation — &euro;7,850.00</div>
+      <div class="opt"><span class="box-chk"></span>Refined — &euro;8,635.00</div>
+      <div class="opt"><span class="box-chk"></span>Prestige — &euro;10,205.00</div>
+    </div>
+
+    <div class="signature-grid">
+      <div class="row">
+        <div class="col">
+          <div class="role">Client</div>
+          Name: <b>Mladen</b>
+          <div class="sig-line">Signature &nbsp;&nbsp;&nbsp; Date: ______________</div>
+        </div>
+        <div class="col">
+          <div class="role">Verteks S.A. Construction Ltd</div>
+          Name: <b>Ellina Mourantova</b> — Director
+          <div class="sig-line">Signature &nbsp;&nbsp;&nbsp; Date: 13 / 07 / 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="closing">Thank you for considering VERTEKS S.A. CONSTRUCTION LTD for your project.</div>
+  </div>
+
+</div>
+</body>
+</html>
