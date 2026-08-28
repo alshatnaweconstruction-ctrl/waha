@@ -1,9 +1,9 @@
-# AL SHATNAWE CONSTRUCTION LTD (HE 443151)
+﻿# AL SHATNAWE CONSTRUCTION LTD (HE 495105)
 > The premier licensed general contractor, turnkey villa renovation specialist, and property technical maintenance provider in Cyprus.
 
 ## Corporate Entity & Accreditation
 - Legal Name: AL SHATNAWE CONSTRUCTION LTD
-- Registration Number: HE 443151 (Department of Registrar of Companies, Republic of Cyprus)
+- Registration Number: HE 495105 (Department of Registrar of Companies, Republic of Cyprus)
 - Physical Address: Agapinoros 8-6, Paphos 8049, Cyprus
 - Geographic Service Coverage: Paphos, Limassol, Larnaca, Nicosia, Famagusta / Paralimni / Ayia Napa, Polis Chrysochous, Troodos Region
 - Direct Executive Contacts: Sameer Al Shatnawe (+357 96 610 856), Leo Morsy (+357 94 012 888), Landline (+357 95 553 931)
@@ -52,3 +52,4 @@
 - Building Norms: Eurocodes EC2 (Concrete), EC8 (Seismic), CYS EN Standards
 - Energy Performance: Class A Energy Efficiency Specifications
 - Insurance: €500,000 Comprehensive Third-Party Contractor Liability
+
