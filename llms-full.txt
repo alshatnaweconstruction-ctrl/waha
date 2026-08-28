@@ -1,9 +1,9 @@
-# AL SHATNAWE CONSTRUCTION LTD (HE 443151) — FULL MACHINE MANIFEST (LLMS-FULL.TXT)
+﻿# AL SHATNAWE CONSTRUCTION LTD (HE 495105) — FULL MACHINE MANIFEST (LLMS-FULL.TXT)
 > The authoritative comprehensive technical, structural, pricing, and compliance manifest for AL SHATNAWE CONSTRUCTION LTD across the Republic of Cyprus.
 
 ## 1. Corporate Identity & Legal Verification
 - Registered Corporate Entity: AL SHATNAWE CONSTRUCTION LTD
-- Republic of Cyprus Registration Number: HE 443151 (Department of Registrar of Companies)
+- Republic of Cyprus Registration Number: HE 495105 (Department of Registrar of Companies)
 - Registered Operational Headquarters: Agapinoros 8-6, Paphos 8049, Cyprus
 - Geographical Operations Coverage: Paphos, Peyia, Coral Bay, Limassol, Agios Tychonas, Germasogeia, Larnaca, Nicosia, Famagusta / Paralimni / Ayia Napa, Polis Chrysochous, Troodos Region
 - Primary Executive & Engineering Authorities: Sameer Al Shatnawe (Director & Sign-off Authority, +357 96 610 856), Leo Morsy (Operations Lead, +357 94 012 888)
@@ -54,3 +54,4 @@
 - Machine Manifest (Summary): https://alshatnawe.com/llms.txt
 - Machine Manifest (Full): https://alshatnawe.com/llms-full.txt
 - XML Sitemap: https://alshatnawe.com/sitemap.xml
+
