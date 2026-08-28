@@ -1,0 +1,51 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# -----------------------------------------------------------------------------
+# REAL-TIME AI CITATION & SEARCH AGENTS (MANDATORY FOR GEO VISIBILITY)
+# -----------------------------------------------------------------------------
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# -----------------------------------------------------------------------------
+# PRIMARY SEARCH ENGINE CRAWLERS
+# -----------------------------------------------------------------------------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# -----------------------------------------------------------------------------
+# FOUNDATIONAL MODEL TRAINING CRAWLERS (PERMITTED FOR GLOBAL DISCOVERY)
+# -----------------------------------------------------------------------------
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# -----------------------------------------------------------------------------
+# SITEMAP LOCATION
+# -----------------------------------------------------------------------------
+Sitemap: https://alshatnawe.com/sitemap.xml
