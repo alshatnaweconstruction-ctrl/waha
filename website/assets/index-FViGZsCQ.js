@@ -1,0 +1,1 @@
+import{r as o,R as s}from"./vendor-motion-DTZY4Nmb.js";import{a1 as u}from"./index-CGFXIufk.js";var i=s[" useId ".trim().toString()]||(()=>{}),c=0;function f(r){const[t,a]=o.useState(i());return u(()=>{a(e=>e??String(c++))},[r]),t?`radix-${t}`:""}export{f as u};
