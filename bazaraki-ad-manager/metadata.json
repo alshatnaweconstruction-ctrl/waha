@@ -1,0 +1,6 @@
+{
+  "name": "Bazaraki Ad Manager",
+  "description": "An automated ad publishing pipeline, duplicate-prevention rewriter, and live XML feed generator for Al Shatnawe Construction Ltd.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
